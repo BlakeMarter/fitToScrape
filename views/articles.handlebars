@@ -1,0 +1,11 @@
+<h1>Articles</h1>
+
+<ul>
+  {{#each articles}}
+  {{title}} {{value}} <br>
+  {{summary}} {{value}} <br>
+  {{link}} {{value}} <br>
+   <button class"btn btn-primary" type="button" data-id="{{_id}} {{value}}">Save Article</button>
+   <br>
+  {{/each}}
+</ul>

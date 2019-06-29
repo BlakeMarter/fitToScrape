@@ -2,7 +2,7 @@ const express = require("express");
 const logger = require("morgan");
 const mongoose = require("mongoose");
 
-const PORT = 3000;
+const PORT = process.env.PORT || 3000;
 
 // Initialize Express
 const app = express();
@@ -17,9 +17,9 @@ app.use(express.static("public"));
 app.use(express.urlencoded({ extended: true }));
 app.use(express.json());
 
-const bars = require("express-handlebars");
+const exphbs = require("express-handlebars");
 
-app.engine("handlebars", bars({ defaultLayout: "main" }));
+app.engine("handlebars", exphbs({ defaultLayout: "main" }));
 app.set("view engine", "handlebars");
 
 // Connect to the Mongo DB
@@ -32,7 +32,7 @@ require("./controllers/appController")(app);
 
 // Start the server
 app.listen(PORT, function() {
-  console.log("App running on http://localhost:" + PORT + "!");
+  console.log("App running on http://localhost:" + PORT);
 });
 
 module.exports = app;

@@ -12,16 +12,22 @@ module.exports = app => {
   });
 
   app.get("/scrape", (req, res) => {
-    axios.get("http://www.echojs.com/").then(response => {
+    axios.get("http://www.ign.com/articles").then(response => {
       var $ = cheerio.load(response.data);
 
-      $("article h2").each(function (i, element) {
+      $(".listElmnt").each(function (i, element) {
         var result = {};
 
         result.title = $(this)
+          .find(".listElmnt-blogItem")
           .children("a")
           .text();
+        result.summary = $(this)
+          .find(".listElmnt-blogItem")
+          .children("p")
+          .text();
         result.link = $(this)
+          .find(".listElmnt-blogItem")
           .children("a")
           .attr("href");
 
@@ -32,25 +38,66 @@ module.exports = app => {
           .catch(err => console.log(err));
       });
 
-      res.send("Scrape Complete");
+      res.redirect("/articles");
     });
   });
 
   app.get("/articles", (req, res) => {
     db.Article.find({})
-      .then(dbArticle => res.render(dbArticle))
+      .then(function (dbArticle) {
+        var hbsObject = {
+          articles: dbArticle
+        }
+        console.log(hbsObject);
+        res.render("articles", hbsObject)
+      })
       .catch(err => res.json(err));
   });
 
-  app.get("/articles/:id", (req, res) => {
+  app.get("/savedArticles", (req, res) => {
+    db.Article.find({ saved: true })
+      .then(function (dbArticle) {
+        var hbsObject = {
+          articles: dbArticle
+        }
+        console.log(hbsObject);
+        res.render("savedArticles", hbsObject)
+      })
+      .catch(err => res.json(err));
+  });
+
+  app.get("/savedArticles/:id", (req, res) => {
     db.Article.findOne({ _id: req.params.id })
       .populate("note")
       .then(dbArticle => res.render(dbArticle))
       .catch(err => res.json(err));
   });
 
-  // Route for saving/updating an Article's associated Note
+
+  // app.get("/savedArticles", (req, res) => {
+  //   db.SavedArticle.find({})
+  //   .populate("article")
+  //   .populate("note")
+  //   .then(dbSavedArticle => res.render(dbSavedArticle))
+  //   .catch(err => res.json(err));
+  // });
+
   app.post("/articles/:id", function (req, res) {
+    db.Article.create(req.body)
+      .then(dbArticle => db.Article.findOneAndUpdate({
+        _id: req.params.id
+      },
+        {
+          $set: {
+            saved: true
+          }
+        }))
+      .then(dbArticle => res.json(dbArticle))
+      .catch(err => res.json(err));
+  });
+
+  // Route for saving/updating an Article's associated Note
+  app.post("/savedArticles/:id", function (req, res) {
     db.Note.create(req.body)
       .then(dbNote => db.Article.findOneAndUpdate({
         _id: req.params.id
@@ -62,7 +109,6 @@ module.exports = app => {
         }))
       .then(dbArticle => res.json(dbArticle))
       .catch(err => res.json(err));
-
   });
 };
 
