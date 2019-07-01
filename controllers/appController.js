@@ -31,7 +31,7 @@ module.exports = app => {
           .children("a")
           .attr("href");
 
-        console.log(result);
+        // console.log(result);
 
         db.Article.insertMany(result)
           .then(dbArticle => console.log(dbArticle))
