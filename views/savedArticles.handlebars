@@ -1,11 +1,14 @@
 <h1>Saved Articles</h1>
 
 <ul>
-  {{#each articles}}
-  {{title}} {{value}} <br>
-  {{summary}} {{value}} <br>
-  {{link}} {{value}} <br>
-  {{note}} {{value}} <br>
-  <button class"btn btn-primary" type="button" data-id="{{_id}} {{value}}">Add Note</button>
+    {{#each articles}}
+    {{#if saved}}
+      {{_id}} {{value}}<br>
+      {{title}} {{value}} <br>
+      {{summary}} {{value}} <br>
+      {{link}} {{value}} <br>
+      {{note}} {{value}} <br>
+        {{> saveArt-block}}
+    {{/if}}
   {{/each}}
 </ul>

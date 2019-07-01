@@ -33,7 +33,7 @@ module.exports = app => {
 
         console.log(result);
 
-        db.Article.create(result)
+        db.Article.insertMany(result)
           .then(dbArticle => console.log(dbArticle))
           .catch(err => console.log(err));
       });
@@ -74,25 +74,16 @@ module.exports = app => {
   });
 
 
-  // app.get("/savedArticles", (req, res) => {
-  //   db.SavedArticle.find({})
-  //   .populate("article")
-  //   .populate("note")
-  //   .then(dbSavedArticle => res.render(dbSavedArticle))
-  //   .catch(err => res.json(err));
-  // });
-
   app.post("/articles/:id", function (req, res) {
-    db.Article.create(req.body)
-      .then(dbArticle => db.Article.findOneAndUpdate({
-        _id: req.params.id
-      },
-        {
-          $set: {
-            saved: true
-          }
-        }))
-      .then(dbArticle => res.json(dbArticle))
+    db.Article.findOneAndUpdate({
+      _id: req.params.id
+    },
+      {
+        $set: {
+          saved: true
+        }
+      })
+      .then(dbArticle => console.log(dbArticle))
       .catch(err => res.json(err));
   });
 
@@ -110,6 +101,15 @@ module.exports = app => {
       .then(dbArticle => res.json(dbArticle))
       .catch(err => res.json(err));
   });
-};
+
+  app.post("/deleteArticles/:id", function (req, res) {
+    db.Article.findOneAndDelete({
+      _id: req.params.id
+    })
+      .then(dbArticle => console.log(dbArticle))
+      .catch(err => res.json(err));
+  });
+}
+
 
 
