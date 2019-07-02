@@ -18,6 +18,12 @@ module.exports = app => {
       $(".listElmnt").each(function (i, element) {
         var result = {};
 
+        var dataO = $(this)
+        .find(".listElmnt-thumb")
+        .find(".listElmnt-storyHeadline")
+        .children("img")
+        .attr("data-original");
+
         result.title = $(this)
           .find(".listElmnt-blogItem")
           .children("a")
@@ -25,7 +31,21 @@ module.exports = app => {
         result.summary = $(this)
           .find(".listElmnt-blogItem")
           .children("p")
-          .text();
+          .text()
+          .split("Read More")[0];
+        if(dataO) {
+          result.image = $(this)
+          .find(".listElmnt-thumb")
+          .find(".listElmnt-storyHeadline")
+          .children("img")
+          .attr("data-original");
+        } else {
+          result.image = $(this)
+            .find(".listElmnt-thumb")
+            .find(".listElmnt-storyHeadline")
+            .children("img")
+            .attr("src");
+        };
         result.link = $(this)
           .find(".listElmnt-blogItem")
           .children("a")

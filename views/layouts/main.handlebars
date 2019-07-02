@@ -5,76 +5,84 @@
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
-  <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
-    integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+  <link rel="stylesheet" href="https://use.fontawesome.com/releases/v5.8.2/css/all.css">
+  <!-- Bootstrap core CSS -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/twitter-bootstrap/4.3.1/css/bootstrap.min.css" rel="stylesheet">
+  <!-- Material Design Bootstrap -->
+  <link href="https://cdnjs.cloudflare.com/ajax/libs/mdbootstrap/4.8.3/css/mdb.min.css" rel="stylesheet">
   <title>Mongo Scraper</title>
   <link rel="stylesheet" type="text/css" href="/assets/css/style.css">
+
   <head>
 
-<body class="background">
-  <nav class="navbar navbar-expand-lg navbar-light bg-light">
-    <a class="navbar-brand" href="#">I Can Scrape That</a>
-    <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
-      aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-      <span class="navbar-toggler-icon"></span>
-    </button>
+  <body class="background container">
+    <nav class="navbar navbar-expand-md navbar-light bg-light fixed-top justify-content-end">
+      <a class="navbar-brand" href="/articles">We Can Scrape That</a>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent"
+        aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
 
-    <div class="collapse navbar-collapse" id="navbarSupportedContent">
-      <ul class="navbar-nav mr-auto">
-        <li class="nav-item active">
-          <a class="nav-link" href="/articles">Home <span class="sr-only">(current)</span></a>
-        </li>
-        <li class="nav-item">
-          <a class="nav-link" href="/savedArticles">Saved Articles</a>
-        </li>
-        <li class="nav-item">
-          {{!-- <a class="nav-link" href="/scrape"> --}}
-          <button type="button" class="btn btn-danger" id="scrapeBtn" data-toggle="modal" data-target="#scrapeModal" onclick="location.href">
-            Scrape IGN News
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav mr-auto">
+          <li class="nav-item mt-2">
+            <a class="nav-link" href="/articles">Articles</a>
+          </li>
+          <li class="nav-item mt-2">
+            <a class="nav-link" href="/savedArticles">Saved Articles</a>
+          </li>
+          <li class="nav-item">
+            {{!-- <a class="nav-link" href="/scrape"> --}}
+            <button type="button" class="btn btn-danger" id="scrapeBtn" data-toggle="modal" data-target="#scrapeModal"
+              onclick="location.href">
+              Scrape IGN News
             </button>
-          {{!-- </a> --}}
-        </li>
-      </ul>
-    </div>
-  </nav>
-  <div class="container">
-    {{{ body }}}
-  <!-- Modal -->
-<div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-footer">
-      <div class="modal-body mx-auto">
-        <h5>Article Saved</h5>
+            {{!-- </a> --}}
+          </li>
+        </ul>
       </div>
-        <button type="button" class="btn btn-secondary" id="closeModel" data-dismiss="modal">Close</button>
+    </nav>
+    <div class="container">
+      {{{ body }}}
+      <!-- Modal -->
+      <div class="modal fade" id="saveModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-footer">
+              <div class="modal-body mx-auto">
+                <h5>Article Saved</h5>
+              </div>
+              <button type="button" class="btn btn-outline-success waves-effect" id="closeModel"
+                data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
       </div>
-    </div>
-  </div>
-</div>
-<div class="modal fade" id="scrapeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-footer">
-      <div class="modal-body mx-auto">
-        <h5>You just scraped 10 new aricles</h5>
+      <div class="modal fade" id="scrapeModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel"
+        aria-hidden="true">
+        <div class="modal-dialog" role="document">
+          <div class="modal-content">
+            <div class="modal-footer">
+              <div class="modal-body mx-auto">
+                <h5>You just scraped 10 new aricles</h5>
+              </div>
+              <button type="button" class="btn btn-outline-success waves-effect" id="closeScrapeModal" data-dismiss="modal">Close</button>
+            </div>
+          </div>
+        </div>
       </div>
-        <button type="button" class="btn btn-secondary" id="closeScrapeModal" data-dismiss="modal">Close</button>
-      </div>
-    </div>
-  </div>
-</div>
-<!-- Modal -->
+      <!-- Modal -->
 
-  </div>
-<script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
-  <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
-    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
-    crossorigin="anonymous"></script>
-  <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
-    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
-    crossorigin="anonymous"></script>
-  <script src="/assets/js/app.js"></script>
-</body>
+    </div>
+    <script src="https://ajax.googleapis.com/ajax/libs/jquery/3.4.1/jquery.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+      integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+      crossorigin="anonymous"></script>
+    <script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+      integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+      crossorigin="anonymous"></script>
+    <script src="/assets/js/app.js"></script>
+  </body>
 
 </html>

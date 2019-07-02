@@ -11,6 +11,10 @@ const ArticleSchema = new Schema({
     type: String,
     required: true
   },
+  image: {
+    type: String,
+    require: false
+  },
   summary: {
     type: String,
     required: true
