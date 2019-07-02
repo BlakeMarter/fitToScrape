@@ -37,7 +37,7 @@ $(document).on("click", ".saveNoteBtn", function () {
         url: "/savedArticles"
       }).then(dbArticle => {
         console.log("yup yup");
-        
+        location.reload();
       })
     })
   location.reload();
