@@ -35,12 +35,11 @@ $(document).on("click", ".saveNoteBtn", function () {
       $.ajax({
         method: "GET",
         url: "/savedArticles"
-      }).then(dbArticle => {
-        console.log("yup yup");
+      }).then(function () {
         location.reload();
       })
     })
-  location.reload();
+  // location.reload();
 });
 
 $(document).on("click", ".delArt", function () {
