@@ -55,7 +55,7 @@ module.exports = app => {
   });
 
   app.get("/savedArticles", (req, res) => {
-    db.Article.find({ saved: true })
+    db.Article.find({ saved: true }).populate("note")
       .then(function (dbArticle) {
         var hbsObject = {
           articles: dbArticle
@@ -66,12 +66,12 @@ module.exports = app => {
       .catch(err => res.json(err));
   });
 
-  app.get("/savedArticles/:id", (req, res) => {
-    db.Article.findOne({ _id: req.params.id })
-      .populate("note")
-      .then(dbArticle => res.render(dbArticle))
-      .catch(err => res.json(err));
-  });
+  // app.get("/savedArticles/:id", (req, res) => {
+  //   db.Article.findOne({ _id: req.params.id })
+  //     .populate("note")
+  //     .then(dbArticle => res.render(dbArticle))
+  //     .catch(err => res.json(err));
+  // });
 
 
   app.post("/articles/:id", function (req, res) {

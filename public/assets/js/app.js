@@ -21,8 +21,8 @@ $(document).on("click", ".saveNoteBtn", function () {
   console.log(id);
   console.log($("#titleInput").val());
   console.log($("#bodyInput").val())
-  
-  
+
+
   $.ajax({
     method: "POST",
     url: "/savedArticles/" + id,
@@ -30,6 +30,28 @@ $(document).on("click", ".saveNoteBtn", function () {
       title: $("#titleInput").val(),
       body: $("#bodyInput").val()
     }
+  }).then(
+    function (data) {
+      console.log(data);
+      $.ajax({
+        method: "GET",
+        url: "/savedArticles"
+      }).then(dbArticle => {
+        console.log("yup");
+        
+      })
+
+    })
+  location.reload();
+});
+
+$(document).on("click", ".delArt", function () {
+  var id = $(this).attr("data-id");
+
+  $.ajax({
+    method: "POST",
+    url: "/deleteArticles/" + id,
+    data: id
   }).then(
     function (data) {
       console.log(data);
@@ -48,21 +70,7 @@ $(document).on("click", ".delArt", function () {
     function (data) {
       console.log(data);
     })
-    location.reload();
-});
-
-$(document).on("click", ".delArt", function () {
-  var id = $(this).attr("data-id");
-
-  $.ajax({
-    method: "POST",
-    url: "/deleteArticles/" + id,
-    data: id
-  }).then(
-    function (data) {
-      console.log(data);
-    })
-    location.reload();
+  location.reload();
 });
 
 $("#saveModal").on("click", function () {
