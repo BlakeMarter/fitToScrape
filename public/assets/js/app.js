@@ -1,4 +1,3 @@
-
 $(document).on("click", ".saveBtn", function () {
   var id = $(this).attr("data-id");
 
@@ -37,10 +36,9 @@ $(document).on("click", ".saveNoteBtn", function () {
         method: "GET",
         url: "/savedArticles"
       }).then(dbArticle => {
-        console.log("yup");
+        console.log("yup yup");
         
       })
-
     })
   location.reload();
 });
@@ -59,18 +57,13 @@ $(document).on("click", ".delArt", function () {
   location.reload();
 });
 
-$(document).on("click", ".delArt", function () {
-  var id = $(this).attr("data-id");
+$(".addNote").on("click", function () {
 
-  $.ajax({
-    method: "POST",
-    url: "/deleteArticles/" + id,
-    data: id
-  }).then(
-    function (data) {
-      console.log(data);
-    })
-  location.reload();
+  let divId = $(this).attr("data-id");
+  console.log(divId);
+  
+  $(".saveNoteBtn").attr("data-id", divId);
+  
 });
 
 $("#saveModal").on("click", function () {

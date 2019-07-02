@@ -3,7 +3,7 @@
 <ul>
     {{#each articles}}
     {{#if saved}}
-      {{_id}} {{value}}<br>
+    <div class="savedArtDiv" data-id="{{_id}}">
       {{title}} {{value}} <br>
       {{summary}} {{value}} <br>
       {{link}} {{value}} <br>
@@ -11,27 +11,29 @@
       {{note.body}} {{value}} <br>
         {{> saveArt-block}}
         <div class="modal fade" id="noteModal" tabindex="-1" role="dialog" aria-labelledby="exampleModalLabel" aria-hidden="true">
-  <div class="modal-dialog" role="document">
-    <div class="modal-content">
-      <div class="modal-body">
-        <form>
-          <div class="form-group">
-            <label for="formGroupExampleInput">Add a Title</label>
-            <input type="text" class="form-control" id="titleInput">
+          <div class="modal-dialog" role="document">
+            <div class="modal-content">
+              <div class="modal-body">
+                <form>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput">Add a Title</label>
+                    <input type="text" class="form-control" id="titleInput">
+                  </div>
+                  <div class="form-group">
+                    <label for="formGroupExampleInput2">Add text</label>
+                    <input type="text" class="form-control" id="bodyInput">
+                  </div>
+                </form>
+              </div>
+            <div class="modal-footer">
+              <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
+              <button type="button" class="btn btn-primary saveNoteBtn" data-id="{{_id}}">Save Note</button>
+            </div>
           </div>
-          <div class="form-group">
-            <label for="formGroupExampleInput2">Add text</label>
-            <input type="text" class="form-control" id="bodyInput">
-          </div>
-        </form>
-      </div>
-      <div class="modal-footer">
-        <button type="button" class="btn btn-secondary" data-dismiss="modal">Close</button>
-        <button type="button" class="btn btn-primary saveNoteBtn" data-id="{{this._id}}">Save Note</button>
+        </div>
       </div>
     </div>
-  </div>
-</div>
+
     {{/if}}
   {{/each}}
 </ul>

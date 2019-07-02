@@ -66,12 +66,12 @@ module.exports = app => {
       .catch(err => res.json(err));
   });
 
-  // app.get("/savedArticles/:id", (req, res) => {
-  //   db.Article.findOne({ _id: req.params.id })
-  //     .populate("note")
-  //     .then(dbArticle => res.render(dbArticle))
-  //     .catch(err => res.json(err));
-  // });
+  app.get("/savedArticles/:id", (req, res) => {
+    db.Article.find({ _id: req.params.id })
+      .populate("note")
+      .then(dbArticle => res.render(dbArticle))
+      .catch(err => res.json(err));
+  });
 
 
   app.post("/articles/:id", function (req, res) {
